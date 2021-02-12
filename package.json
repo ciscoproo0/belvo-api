@@ -1,0 +1,28 @@
+{
+  "name": "belvo-api",
+  "version": "1.0.0",
+  "description": "Playground API to test Belvo APIs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.js",
+    "start": "node build/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "belvo": "^0.10.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "nodemon": "^2.0.7",
+    "youch": "^2.1.1",
+    "yup": "^0.32.8"
+  },
+  "devDependencies": {
+    "sucrase": "^3.17.1"
+  }
+}
