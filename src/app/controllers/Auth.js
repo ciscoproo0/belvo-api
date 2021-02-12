@@ -31,7 +31,7 @@ class Auth {
             return res.json(token);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
     
     }

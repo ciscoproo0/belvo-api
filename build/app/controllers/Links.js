@@ -10,18 +10,22 @@ class Links {
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await _belvo.sandbox.post('/api/links', req.body);
+                    response = await _belvo.sandbox.post('/api/links/', req.body);
                     break;
 
                 case 'live':
-                    response = await _belvo.live.post('/api/links', req.body);
+                    response = await _belvo.live.post('/api/links/', req.body);
                     break;
             }
 
-            return res.json(response.data);
+            return res.status(response.status).json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            if(err.response.status){
+                return res.status(err.response.status).json(err.response.data)
+            }
+
+            return res.status(500).json({message: "an internal error ocurred, contact system's administrator"})
         }
     }
 
@@ -33,18 +37,18 @@ class Links {
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await _belvo.sandbox.put(`/api/links/${id}`, {password});
+                    response = await _belvo.sandbox.put(`/api/links/${id}/`, {password});
                     break;
 
                 case 'live':
-                    response = await _belvo.live.put(`/api/links/${id}`, {password});
+                    response = await _belvo.live.put(`/api/links/${id}/`, {password});
                     break;
             }
 
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
     }
 
@@ -66,28 +70,28 @@ class Links {
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
     }
 
     async list(req, res){
+        let page = req.query.page;
         try {
             let response;
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await _belvo.sandbox.get(`/api/links/`);
+                    response = await _belvo.sandbox.get(`/api/links/${page ? `?page=${page}` : ''}`);
                     break;
 
                 case 'live':
-                    response = await _belvo.live.get(`/api/links/`);
+                    response = await _belvo.live.get(`/api/links/${page ? `?page=${page}` : ''}`);
                     break;
             }
-
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
     }
 
@@ -97,18 +101,18 @@ class Links {
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await _belvo.sandbox.get(`/api/links/${req.params.id}`);
+                    response = await _belvo.sandbox.get(`/api/links/${req.params.id}/`);
                     break;
 
                 case 'live':
-                    response = await _belvo.live.get(`/api/links/${req.params.id}`);
+                    response = await _belvo.live.get(`/api/links/${req.params.id}/`);
                     break;
             }
 
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
     }
 
@@ -118,18 +122,18 @@ class Links {
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await _belvo.sandbox.delete(`/api/links/${req.params.id}`);
+                    response = await _belvo.sandbox.delete(`/api/links/${req.params.id}/`);
                     break;
 
                 case 'live':
-                    response = await _belvo.live.delete(`/api/links/${req.params.id}`);
+                    response = await _belvo.live.delete(`/api/links/${req.params.id}/`);
                     break;
             }
 
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
     }
 }

@@ -9,17 +9,17 @@ class Balances {
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await _belvo.sandbox.post(`/api/balances`, req.body);
+                    response = await _belvo.sandbox.post(`/api/balances/`, req.body);
                     break;
 
                 case 'live':
-                    response = await _belvo.live.post(`/api/balances`, req.body);
+                    response = await _belvo.live.post(`/api/balances/`, req.body);
                     break;
             }
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
         
     }
@@ -30,37 +30,38 @@ class Balances {
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await _belvo.sandbox.patch(`/api/balances`, req.body);
+                    response = await _belvo.sandbox.patch(`/api/balances/`, req.body);
                     break;
 
                 case 'live':
-                    response = await _belvo.live.patch(`/api/balances`, req.body);
+                    response = await _belvo.live.patch(`/api/balances/`, req.body);
                     break;
             }
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
     }
 
     async list(req, res){
+        let page = req.query.page;
         try {
             let response;
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await _belvo.sandbox.get(`/api/balances`);
+                    response = await _belvo.sandbox.get(`/api/balances/${page ? `?page=${page}` : ''}`);
                     break;
 
                 case 'live':
-                    response = await _belvo.live.get(`/api/balances`);
+                    response = await _belvo.live.get(`/api/balances/${page ? `?page=${page}` : ''}`);
                     break;
             }
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
     }
 
@@ -70,17 +71,17 @@ class Balances {
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await _belvo.sandbox.get(`/api/balances/${req.params.id}`);
+                    response = await _belvo.sandbox.get(`/api/balances/${req.params.id}/`);
                     break;
 
                 case 'live':
-                    response = await _belvo.live.get(`/api/balances/${req.params.id}`);
+                    response = await _belvo.live.get(`/api/balances/${req.params.id}/`);
                     break;
             }
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
     }
 
@@ -90,17 +91,17 @@ class Balances {
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await _belvo.sandbox.delete(`/api/balances/${req.params.id}`);
+                    response = await _belvo.sandbox.delete(`/api/balances/${req.params.id}/`);
                     break;
 
                 case 'live':
-                    response = await _belvo.live.delete(`/api/balances/${req.params.id}`);
+                    response = await _belvo.live.delete(`/api/balances/${req.params.id}/`);
                     break;
             }
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
     }
 }

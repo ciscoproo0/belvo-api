@@ -9,17 +9,23 @@ class Transactions {
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await sandbox.post(`/api/transactions`, req.body);
+                    response = await sandbox.post(`/api/transactions/`, req.body);
                     break;
 
                 case 'live':
-                    response = await live.post(`/api/transactions`, req.body);
+                    response = await live.post(`/api/transactions/`, req.body);
                     break;
             }
+
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            if(err.response.status === 428){
+                return res.status(428).json(
+                    err.response.data
+                )
+            }
+            return res.status(400).json({message: err.response.data})
         }
     }
 
@@ -29,37 +35,38 @@ class Transactions {
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await sandbox.patch(`/api/transactions`, req.body);
+                    response = await sandbox.patch(`/api/transactions/`, req.body);
                     break;
 
                 case 'live':
-                    response = await live.patch(`/api/transactions`, req.body);
+                    response = await live.patch(`/api/transactions/`, req.body);
                     break;
             }
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
     }
 
     async list(req, res){
+        let page = req.query.page;
         try {
             let response;
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await sandbox.get(`/api/transactions`);
+                    response = await sandbox.get(`/api/transactions/${page ? `?page=${page}` : ''}`);
                     break;
 
                 case 'live':
-                    response = await live.get(`/api/transactions`);
+                    response = await live.get(`/api/transactions/${page ? `?page=${page}` : ''}`);
                     break;
             }
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
     }
 
@@ -69,17 +76,17 @@ class Transactions {
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await sandbox.get(`/api/transactions/${req.params.id}`);
+                    response = await sandbox.get(`/api/transactions/${req.params.id}/`);
                     break;
 
                 case 'live':
-                    response = await live.get(`/api/transactions/${req.params.id}`);
+                    response = await live.get(`/api/transactions/${req.params.id}/`);
                     break;
             }
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
     }
 
@@ -89,17 +96,17 @@ class Transactions {
 
             switch(req.headers.mode) {
                 case 'sandbox':
-                    response = await sandbox.delete(`/api/transactions/${req.params.id}`);
+                    response = await sandbox.delete(`/api/transactions/${req.params.id}/`);
                     break;
 
                 case 'live':
-                    response = await live.delete(`/api/transactions/${req.params.id}`);
+                    response = await live.delete(`/api/transactions/${req.params.id}/`);
                     break;
             }
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err})
+            return res.status(400).json({message: err.response.data})
         }
     }
 }
