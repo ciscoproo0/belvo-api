@@ -19,7 +19,11 @@ class Balances {
             return res.json(response.data);
 
         } catch (err) {
-            return res.status(400).json({message: err.response.data})
+            if(err.response.status){
+                return res.status(err.response.status).json(err.response.data)
+            }
+
+            return res.status(500).json({message: "an internal error ocurred, contact system's administrator"})
         }
         
     }
