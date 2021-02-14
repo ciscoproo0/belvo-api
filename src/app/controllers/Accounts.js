@@ -20,6 +20,11 @@ class Accounts {
             return res.json(response.data);
 
         } catch (err) {
+            if(err.response.status === 428){
+                return res.status(428).json(
+                    err.response.data
+                )
+            }
             return res.status(400).json({message: err.response.data})
         }
     }

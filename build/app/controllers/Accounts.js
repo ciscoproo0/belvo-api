@@ -20,11 +20,12 @@ class Accounts {
             return res.json(response.data);
 
         } catch (err) {
-            if(err.response.status){
-                return res.status(err.response.status).json(err.response.data)
+            if(err.response.status === 428){
+                return res.status(428).json(
+                    err.response.data
+                )
             }
-
-            return res.status(500).json({message: "an internal error ocurred, contact system's administrator"})
+            return res.status(400).json({message: err.response.data})
         }
     }
 

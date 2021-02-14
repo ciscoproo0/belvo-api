@@ -13,10 +13,9 @@ class Transactions {
                     break;
 
                 case 'live':
-                    response = await live.post(`/api/transactions/`, req.body);
+                    response = await live.post(`/api/transactions`, req.body);
                     break;
             }
-
             return res.json(response.data);
 
         } catch (err) {
