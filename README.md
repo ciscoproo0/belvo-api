@@ -11,8 +11,9 @@ This is a playground project to test Belvo APIs, having the follow endpoints:
 - Owners;
 - Balances;
 
-You can find a POSTMAN collection, showing how the endpoints works here!
+A live demo to use the endpoints: https://belvo-api.herokuapp.com/
 
+Here are a POSTMAN collection showing how the endpoints works: https://documenter.getpostman.com/view/4255399/TWDRrKDD
 
 ---
 
