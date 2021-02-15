@@ -1,5 +1,4 @@
 import { response } from 'express';
-import * as Yup from 'yup';
 
 import { sandbox, live } from '../services/belvo';
 
